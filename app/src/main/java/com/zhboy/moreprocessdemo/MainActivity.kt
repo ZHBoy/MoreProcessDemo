@@ -22,8 +22,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onLoadDataSuccess(msg: String?) {
-            println("----子进程任务完成，这次可能需要从mmkv里取数据啦")
-            // TODO: 2021/3/6 加入mmkv替换sp
+
+            val task = MMKVUtil.mmkv?.decodeString("task")
+            task?.apply {
+                println("----${task}")
+            }
         }
     }
 
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
             //发送给子进程一个静默下载apk的任务
             val mes = Message()
-            mes.title = "静默下载apk"
+            mes.title = "静默load广告数据"
             iBookAidlInterface?.loadData(mes)
         }
     }
@@ -62,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //AIDL处理跨进程,可以实现并发的需求，（Messenger的底层也是基于AIDL，只能单独的在消息队列一个个处理）
+        //AIDL处理跨进程,可以实现并发的需求，（Messenger的底层也是基于AIDL，只能在消息队列一个个处理）
         findViewById<Button>(R.id.bt02).setOnClickListener {
             //绑定服务
             val intent = Intent(this, MessageService::class.java)

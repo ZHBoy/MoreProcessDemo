@@ -33,7 +33,10 @@ class MessageService : Service() {
          * 获取主进程发送过来的值（实际业务场景，根据发过来的信息做相应操作，比如缓存数据、静默下载apk、加载图片等等）
          */
         override fun loadData(message: Message?) {
-            println("----子进程接收到主进程 发送的${message?.title}的任务 - 开始加载数据...")
+            println("----子进程接收到主进程发送的 ${message?.title}的任务 - 开始加载数据...")
+
+            MMKVUtil.mmkv?.encode("task", "子进程的task完成，这是返回的结果")
+
             Thread.sleep(2000)
             mILoadDataListener?.onLoadDataSuccess("")
         }

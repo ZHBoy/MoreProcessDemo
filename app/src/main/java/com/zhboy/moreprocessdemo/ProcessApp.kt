@@ -3,7 +3,9 @@ package com.zhboy.moreprocessdemo
 import android.app.Application
 import android.os.Build
 import android.webkit.WebView
+import com.tencent.mmkv.MMKV
 import com.zhboy.moreprocessdemo.process.ProcessUtil
+
 
 /**
  * @author: zhou_hao
@@ -28,5 +30,9 @@ class ProcessApp : Application() {
                 }
             }
         }
+
+        //初始化mmkv(当多进程的时候，不能只在主进程初始化)
+        val rootDir = MMKV.initialize(this)
+        println("mmkv root: $rootDir")
     }
 }
